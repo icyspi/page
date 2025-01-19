@@ -1,0 +1,72 @@
+html {
+    background-color: black;
+    background-image: url(background.jpg);
+    background-repeat: no-repeat; 
+    background-size: cover; 
+    background-attachment: fixed; 
+    background-position: center; 
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    font-family: 'Consolas', 'Roboto Mono', 'Courier New', monospace;
+    color: white;
+}
+
+#header {
+    padding-top: 150px;
+}
+
+#content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 165px;
+    padding-top: 100px;
+}
+
+.block {
+    width: 300px;
+    height: 150px;
+    overflow: hidden;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 1.6em;
+    color: black;
+} 
+
+#red {
+    background-color: red;
+}
+
+#blue {
+    background-color: blue;
+}
+
+.block p {
+    font-size: 0.5em;
+}
+
+a {
+    text-decoration: none;
+}
+
+@media (max-width: 768px) {
+    #red, #blue {
+        width: 100%;
+    }
+
+    #content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    html {
+        background-image: none;
+    }
+}
