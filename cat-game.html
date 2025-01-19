@@ -20,6 +20,7 @@
     <text x="500" y="150" font-size="10" font-family="Consolas, Roboto Mono, Courier New, monospace">meals</text>
     <text id="score" x="497" y="135" font-size="40" font-family="Consolas, Roboto Mono, Courier New, monospace"> </text>
     <text id="meow" x="430" y="100" font-size="10" font-family="Consolas, Roboto Mono, Courier New, monospace" opacity="0">meow :3</text>
+    <text id="lostGame" x="130" y="260" font-size="10" font-family="Consolas, Roboto Mono, Courier New, monospace" fill="hsl(10, 75%, 50%)" opacity="0"> </text> 
    
     <rect id="enemy1" x="125" y="20" height="30" width="30" opacity="0"/> <!-- for image: x-10 y-5 scale 2.5-->
     <rect id="enemy2" x="235" y="120" height="30" width="30" opacity="0"/>
@@ -31,9 +32,8 @@
 
 
 <svg id="controls" width="300px" height="50px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <rect x="0" y="0" width="100%" height="100%" fill="red" fill-opacity="0.1"/>
-    <rect id="leftControl" x="0" y="0" height="100%" width="100px" fill="black"></rect>
-    <rect id="rightControl" x="200" y="0" height="100%" width="100px" fill="black"></rect>
+    <rect id="leftControl" x="0" y="0" height="100%" width="100px" fill="hsl(30, 69%, 80%)"></rect>
+    <rect id="rightControl" x="200" y="0" height="100%" width="100px" fill="hsl(30, 69%, 80%)"></rect>
 </svg>
 
 
@@ -60,11 +60,25 @@
     var score = 0;
     var speed = 0.6;
     
-    function showScore(){
+    function showScore() {
         document.getElementById('score').firstChild.data = score;
     }
 
-    function isCatFed(){
+    function showEndGame() {
+        var lostGame = document.getElementById('lostGame');
+        lostGame.firstChild.data = "You let the enemy eat cat's food! You got " + score;
+        if (score == 1) {
+            lostGame.firstChild.data += " meow.";
+        } else {
+            lostGame.firstChild.data += " meows.";
+        }
+        lostGame.setAttribute("opacity", "1");
+        setTimeout(function () {
+                lostGame.setAttribute("opacity", "0");
+            }, 1800);
+    }
+
+    function isCatFed() {
         if (meal.x.baseVal.value+30 >= cat.x.baseVal.value){
             score++;
             meal.x.baseVal.value = 10;
@@ -96,11 +110,18 @@
         );
     }
     
-    function isFoodStolen(){
+    function isFoodStolen() {
         if (isCollision(meal, enemy1) || isCollision(meal, enemy2) || isCollision(meal, enemy3)) {
-            if(alert("You let the enemy eat cat's food! You got " + score + " meows.")){}
-            else window.location.reload(); 	
+            restartGame();
         }
+    }
+
+    function restartGame() {
+        meal.x.baseVal.value = 30;
+        updateMealImagePosition();  
+        showEndGame();
+        speed = 0.6;
+        score = 0;
     }
 
     function enemyMove(enemyObj) {
@@ -140,9 +161,11 @@
 
     function moveMealLeft() {
         var x = meal.x.baseVal.value;
-        x -= 4; 
-        meal.x.baseVal.value = x;
-        updateMealImagePosition();
+        if (x >= 30) {
+            x -= 4; 
+            meal.x.baseVal.value = x;
+            updateMealImagePosition();
+        }
     }
 
     function moveMealRight() {
