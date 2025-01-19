@@ -1,8 +1,19 @@
-body {
-    display: flex;
-    justify-content: center;
+html {
+    background-color: rgba(0, 0, 0, 0.7);
 }
 
-svg {
-    width: 82%;
+body {  
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+}
+
+#game {
+    width: 70%;
+}
+
+#controls {
+    padding-top: 10px;
 }
