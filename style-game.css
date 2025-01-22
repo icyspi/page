@@ -27,10 +27,6 @@ body {
     }
 }
 
-#changeSkin {
-    cursor: pointer;
-}
-
-#leftControl, #rightControl {
+#changeSkin, #exMark, #leftControl, #rightControl {
     cursor: pointer;
 }

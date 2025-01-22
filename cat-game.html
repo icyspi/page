@@ -24,6 +24,7 @@
     <text id="bestScore" x="195" y="15" font-size="10" font-family="Consolas, Roboto Mono, Courier New, monospace"> </text>
 
     <image id="catImage" x="442" y="120" width="50" href="resources/skin-1/cat.png"/>
+    <image id="hatImage" x="442" y="112.2" width="50" href="resources/skin-3/hat.png" opacity="0"/>
 
     <rect id="cat" x="450" y="120" height="40" width="30" opacity="0"/>
     <rect id="meal" x="30" y="132.5" height="15" width="22.7" opacity="0"/> 
@@ -31,6 +32,10 @@
     <text id="textMeal" x="500" y="160" font-size="10" font-family="Consolas, Roboto Mono, Courier New, monospace"> </text>
     <text id="score" x="497" y="145" font-size="40" font-family="Consolas, Roboto Mono, Courier New, monospace"> </text>
     <text id="meow" x="430" y="110" font-size="10" font-family="Consolas, Roboto Mono, Courier New, monospace" opacity="0">meow :3</text>
+    <text id="textHat" x="420" y="90" font-size="8" font-family="Consolas, Roboto Mono, Courier New, monospace" opacity="0">
+        <tspan x="420" dy="1.2em">oh no! I lost my hat.</tspan>
+        <tspan x="400" dy="1.2em">you need 40 meals to find it.</tspan>
+    </text>
     <text id="lostGame" x="130" y="270" font-size="10" font-family="Consolas, Roboto Mono, Courier New, monospace" fill="hsl(10, 75%, 50%)" opacity="0"> </text> 
    
     <image id="mealImage" x="30" y="128.65" width="22.7" height="22.7" href="resources/skin-1/meal.png"/>
@@ -42,6 +47,8 @@
     <image id="enemyImage1" x="121" y="36" height="30" width="32" href="resources/skin-1/enemy1.png"/> <!-- img x-4 y-4 -->
     <image id="enemyImage2" x="231" y="136" height="30" width="32" href="resources/skin-1/enemy2.png"/>
     <image id="enemyImage3" x="341" y="176" height="30" width="32" href="resources/skin-1/enemy3.png"/>
+
+    <image id="exMark" x="440" y="145" width="6" height="24" href="resources/ex-mark.png" opacity="0"/>
 </svg>
 
 
@@ -76,15 +83,15 @@
             catImage: "resources/skin-2/cat.png",
             enemyImages: [
                 "resources/skin-2/enemy1.png",
-                "resources/skin-2/enemy2.png",
-                "resources/skin-2/enemy3.png"
+                "resources/skin-2/enemy1.png",
+                "resources/skin-2/enemy1.png"
             ]
         },
         {
-            bodyColor: "rgb(58, 51, 57)",
-            backgroundColor: "rgb(250, 240, 230)",
-            groundColor: "rgb(220, 200, 190)",
-            controlColor: "rgb(150, 130, 120)",
+            bodyColor: "rgb(58, 56, 51)",
+            backgroundColor: "rgb(240, 235, 227)",
+            groundColor: "rgb(246, 245, 242)",
+            controlColor: "rgb(165, 157, 132)",
             mealImage: "resources/skin-3/meal.png",
             catImage: "resources/skin-3/cat.png",
             enemyImages: [
@@ -95,8 +102,11 @@
         }
     ];
 
+    var hatImage = document.getElementById("hatImage");
+    var exMark = document.getElementById("exMark");
+    var hatPoints = 40;
     var currentSkinIndex = 0;
-
+    document.getElementById("changeSkin").addEventListener("click", changeSkin);
     function changeSkin() {
         currentSkinIndex = (currentSkinIndex + 1) % skins.length;
         var skin = skins[currentSkinIndex];
@@ -110,15 +120,39 @@
         document.querySelector("rect[x='58'][y='5']").setAttribute("fill", skin.controlColor);
 
         mealImage.setAttribute("href", skin.mealImage);
+        catImage.setAttribute("href", skin.catImage);
         enemyImage1.setAttribute("href", skin.enemyImages[0]);
         enemyImage2.setAttribute("href", skin.enemyImages[1]);
         enemyImage3.setAttribute("href", skin.enemyImages[2]);
 
         document.body.style.backgroundColor = skin.bodyColor;
+
+        if (currentSkinIndex == 2 && bestScore >= hatPoints) {
+            hatImage.setAttribute("opacity", "1");
+            hideExMark();
+        } else if (currentSkinIndex == 2 && bestScore < hatPoints){
+            exMark.setAttribute("opacity", "1");
+            exMark.setAttribute("pointer-events", "auto");
+        } else {
+            hatImage.setAttribute("opacity", "0");
+            hideExMark();
+        }
     }
 
-    document.getElementById("changeSkin").addEventListener("click", changeSkin);
+    function hideExMark(){
+        exMark.setAttribute("opacity", "0");
+        exMark.setAttribute("pointer-events", "none");
+    }
 
+    document.getElementById("exMark").addEventListener("click", showHatMessage);
+    function showHatMessage() {
+        var textHat = document.getElementById("textHat");
+        textHat.setAttribute("opacity", "1");
+        setTimeout(function () {
+            textHat.setAttribute("opacity", "0");
+        }, 4000);
+    }
+    
     var bestScore = localStorage.getItem('bestScore') || 0;
 
     var meal = document.getElementById("meal");
@@ -154,10 +188,19 @@
         document.getElementById('bestScore').firstChild.data = bestScore;
     }
 
+    var isHat = localStorage.getItem('isHat') || 0;
     function updateBestScore() {
-    if (score > bestScore) {
-        bestScore = score;
-        localStorage.setItem('bestScore', bestScore);
+        if (score > bestScore) {
+            bestScore = score;
+            localStorage.setItem('bestScore', bestScore);
+        }
+    
+        if (bestScore == hatPoints && isHat == 0) {
+            isHat = 1;
+            if (currentSkinIndex == 2) {
+                hatImage.setAttribute("opacity", "1");
+                hideExMark();
+            }
         }
     }
 
