@@ -12,13 +12,13 @@
     
 <svg id="game" viewBox="0 0 550 310" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 
-    <rect x="0" y="0" width="100%" height="100%" fill="rgb(240, 235, 227)" fill-opacity="1"/>
+    <rect x="0" y="0" width="100%" height="100%" fill="rgb(240, 235, 227)" fill-opacity="0.8"/>
     <rect x="0" y="36" width="100%" height="210" fill="rgb(246, 245, 242)" fill-opacity="1"/>
 
-    <rect x="5" y="5" width="48" height="15" fill="rgb(165, 157, 132)"/>
+    <rect x="5" y="5" width="48" height="15" fill="rgb(186, 94, 90)"/>
     <a href="index.html"><text id="goBack" x="10" y="15" font-size="10" font-family="Consolas, Roboto Mono, Courier New, monospace">go back</text></a>
     
-    <rect x="58" y="5" width="70" height="15" fill="rgb(165, 157, 132)"/>
+    <rect x="58" y="5" width="70" height="15" fill="rgb(186, 94, 90)"/>
     <text id="changeSkin" x="63" y="15" font-size="10" font-family="Consolas, Roboto Mono, Courier New, monospace">change skin</text>
     <text x="133" y="15" font-size="10" font-family="Consolas, Roboto Mono, Courier New, monospace">best score: </text>
     <text id="bestScore" x="195" y="15" font-size="10" font-family="Consolas, Roboto Mono, Courier New, monospace"> </text>
@@ -53,8 +53,8 @@
 
 
 <svg id="controls" width="300px" height="50px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <rect id="leftControl" x="0" y="0" height="100%" width="100px" fill="rgb(165, 157, 132)"></rect>
-    <rect id="rightControl" x="200" y="0" height="100%" width="100px" fill="rgb(165, 157, 132)"></rect>
+    <rect id="leftControl" x="0" y="0" height="100%" width="100px" fill="rgb(186, 94, 90)"></rect>
+    <rect id="rightControl" x="200" y="0" height="100%" width="100px" fill="rgb(186, 94, 90)"></rect>
 </svg>
 
 
@@ -62,10 +62,11 @@
 
     var skins = [
         {
-            bodyColor: "rgb(58, 56, 51)",
+            bodyColor: "rgb(82, 43, 49)",
+            bodyImage: "url(resources/skin-1/background.png)",
             backgroundColor: "rgb(240, 235, 227)",
             groundColor: "rgb(246, 245, 242)",
-            controlColor: "rgb(165, 157, 132)",
+            controlColor: "rgb(186, 94, 90)",
             mealImage: "resources/skin-1/meal.png",
             catImage: "resources/skin-1/cat.png",
             enemyImages: [
@@ -75,10 +76,11 @@
             ]
         },
         {
-            bodyColor: "rgb(51, 54, 58)",
-            backgroundColor: "rgb(200, 220, 230)",
-            groundColor: "rgb(180, 200, 210)",
-            controlColor: "rgb(100, 120, 130)",
+            bodyColor: "rgb(52, 51, 34)",
+            bodyImage: "url(resources/skin-2/background.png)",
+            backgroundColor: "rgb(171, 183, 172)",
+            groundColor: "rgb(134, 137, 123)",
+            controlColor: "rgb(91, 100, 72)",
             mealImage: "resources/skin-2/meal.png",
             catImage: "resources/skin-2/cat.png",
             enemyImages: [
@@ -88,16 +90,17 @@
             ]
         },
         {
-            bodyColor: "rgb(58, 56, 51)",
-            backgroundColor: "rgb(240, 235, 227)",
+            bodyColor: "rgb(18, 63, 99)",
+            bodyImage: "url(resources/skin-3/background.png)",
+            backgroundColor: "rgb(185, 231, 230)",
             groundColor: "rgb(246, 245, 242)",
-            controlColor: "rgb(165, 157, 132)",
+            controlColor: "rgb(62, 155, 162)",
             mealImage: "resources/skin-3/meal.png",
             catImage: "resources/skin-3/cat.png",
             enemyImages: [
                 "resources/skin-3/enemy1.png",
-                "resources/skin-3/enemy2.png",
-                "resources/skin-3/enemy3.png"
+                "resources/skin-3/enemy1.png",
+                "resources/skin-3/enemy1.png"
             ]
         }
     ];
@@ -126,6 +129,7 @@
         enemyImage3.setAttribute("href", skin.enemyImages[2]);
 
         document.body.style.backgroundColor = skin.bodyColor;
+        document.body.style.backgroundImage = skin.bodyImage;
 
         if (currentSkinIndex == 2 && bestScore >= hatPoints) {
             hatImage.setAttribute("opacity", "1");
