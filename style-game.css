@@ -2,6 +2,10 @@ html {
     background-color: black;
 }
 
+svg text {
+    user-select: none;
+}
+
 body {  
     height: 100vh;
     margin: 0;
@@ -33,6 +37,10 @@ body {
     }
 }
 
-#changeSkin, #exMark, #leftControl, #rightControl {
+#changeSkin, #exMark, #leftControl, #rightControl, #info{
     cursor: pointer;
+}
+
+#infoGroup{
+    pointer-events: none;
 }

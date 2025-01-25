@@ -16,10 +16,10 @@
     <rect x="0" y="36" width="100%" height="210" fill="rgb(246, 245, 242)" fill-opacity="1"/>
 
     <rect x="5" y="5" width="48" height="15" fill="rgb(186, 94, 90)"/>
-    <a href="index.html"><text id="goBack" x="10" y="15" font-size="10" font-family="Consolas, Roboto Mono, Courier New, monospace">go back</text></a>
+    <a href="index.html"><text id="goBack" x="10" y="15" font-size="10" font-family="Consolas, Roboto Mono, Courier New, monospace" fill="rgb(255, 255, 255)">go back</text></a>
     
     <rect x="58" y="5" width="70" height="15" fill="rgb(186, 94, 90)"/>
-    <text id="changeSkin" x="63" y="15" font-size="10" font-family="Consolas, Roboto Mono, Courier New, monospace">change skin</text>
+    <text id="changeSkin" x="63" y="15" font-size="10" font-family="Consolas, Roboto Mono, Courier New, monospace" fill="rgb(255, 255, 255)">change skin</text>
     <text x="133" y="15" font-size="10" font-family="Consolas, Roboto Mono, Courier New, monospace">best score: </text>
     <text id="bestScore" x="195" y="15" font-size="10" font-family="Consolas, Roboto Mono, Courier New, monospace"> </text>
 
@@ -49,12 +49,27 @@
     <image id="enemyImage3" x="341" y="176" height="30" width="32" href="resources/skin-1/enemy3.png"/>
 
     <image id="exMark" x="440" y="145" width="6" height="24" href="resources/ex-mark.png" opacity="0"/>
+
+    <g id="infoGroup" opacity="0">
+    <rect id="infoRect1" x="100" y="86" width="350" height="110" fill="rgb(186, 94, 90)"></rect>
+    <rect id="infoRect2" x="105" y="91" width="340" height="100" style="fill:none;stroke-width:2;stroke:white"></rect>
+    <text id="textInfo" x="115" y="101" font-size="10" fill="rgb(255, 255, 255)" font-family="Consolas, Roboto Mono, Courier New, monospace" opacity="1">
+        <tspan x="115" dy="1.2em">hi!</tspan>
+        <tspan x="115" dy="1.2em">this mini game was poorly made in JS so expect some lags.</tspan>
+        <tspan x="115" dy="1.6em">how to play:</tspan>
+        <tspan x="115" dy="1.2em">use arrows on keyboard or click on the rectangles below.</tspan>
+        <tspan x="275" dy="2.3em" font-size="9">"rectangles are faster" ~Luffy</tspan>
+    </text>
+    </g>
+
+    <image id="info" x="520" y="280" width="20" height="20" href="resources/info.png"></image>
+
 </svg>
 
 
 <svg id="controls" width="300px" height="50px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <rect id="leftControl" x="0" y="0" height="100%" width="100px" fill="rgb(186, 94, 90)"></rect>
-    <rect id="rightControl" x="200" y="0" height="100%" width="100px" fill="rgb(186, 94, 90)"></rect>
+    <rect id="leftControl" x="0" y="0" height="100%" width="100px" fill="rgb(186, 94, 90)" style="stroke-width:2;stroke:white"></rect>
+    <rect id="rightControl" x="200" y="0" height="100%" width="100px" fill="rgb(186, 94, 90)" style="stroke-width:2;stroke:white"></rect>
 </svg>
 
 
@@ -121,6 +136,7 @@
         });
         document.querySelector("rect[x='5'][y='5']").setAttribute("fill", skin.controlColor);
         document.querySelector("rect[x='58'][y='5']").setAttribute("fill", skin.controlColor);
+        document.querySelector("rect[x='100'][y='86']").setAttribute("fill", skin.controlColor);
 
         mealImage.setAttribute("href", skin.mealImage);
         catImage.setAttribute("href", skin.catImage);
@@ -156,7 +172,18 @@
             textHat.setAttribute("opacity", "0");
         }, 4000);
     }
-    
+
+    document.getElementById("info").addEventListener("click", showInfo);
+    function showInfo() {
+        var infoGroup = document.getElementById("infoGroup");
+        if (infoGroup.getAttribute("opacity") == 0) {
+            infoGroup.setAttribute("opacity", "1");
+        } else {
+            infoGroup.setAttribute("opacity", "0");
+        }
+    }
+
+
     var bestScore = localStorage.getItem('bestScore') || 0;
 
     var meal = document.getElementById("meal");
